@@ -410,18 +410,19 @@ const GENRES = [
   { label:'Country Hits',   emoji:'🤠', query:'country hits' },
 ];
 
-// Words that indicate a non-original release — filter these out
+// Only filter out tracks that are clearly not the original artist performing the song
 const JUNK_WORDS = [
-  'acoustic','live','demo','cover','karaoke','instrumental','remix','remaster',
-  'remastered','tribute','version','edit','radio edit','extended','reprise',
-  'soundtrack','motion picture','unplugged','session','commentary','interlude',
-  'skit','intro','outro','bonus','deluxe','medley','mashup','mix','dj '
+  'karaoke','tribute','made famous','cover version','as made','soundtrack'
 ];
 
 function isJunkTrack(track) {
   const titleLow = (track.title || '').toLowerCase();
-  const albumLow = (track.album && track.album.title ? track.album.title : '').toLowerCase();
-  return JUNK_WORDS.some(w => titleLow.includes(w) || albumLow.includes(w));
+  const artistLow = (track.artist && track.artist.name ? track.artist.name : '').toLowerCase();
+  // Block if title contains junk words
+  if (JUNK_WORDS.some(w => titleLow.includes(w))) return true;
+  // Block if artist name itself suggests a cover/tribute act
+  if (artistLow.includes('karaoke') || artistLow.includes('tribute') || artistLow.includes('various')) return true;
+  return false;
 }
 
 // ── State ──────────────────────────────────────────────────────────────────

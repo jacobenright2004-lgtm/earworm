@@ -398,16 +398,16 @@
 <script>
 // ── Genres ─────────────────────────────────────────────────────────────────
 const GENRES = [
-  { label:'90s Hip Hop',    emoji:'🔥', query:'90s rap hip hop' },
-  { label:'90s Alt Rock',   emoji:'🎸', query:'90s alternative rock grunge' },
-  { label:'2000s R&B',      emoji:'💜', query:'2000s r&b soul' },
-  { label:'80s Pop',        emoji:'🕹️', query:'80s pop hits' },
-  { label:'Classic Rock',   emoji:'🤘', query:'classic rock 70s 80s' },
-  { label:'2000s Pop Punk', emoji:'⚡', query:'2000s pop punk emo' },
-  { label:'90s Pop',        emoji:'💿', query:'90s pop hits' },
-  { label:'2000s Hip Hop',  emoji:'🎧', query:'2000s hip hop rap' },
-  { label:'80s Rock',       emoji:'🎵', query:'80s rock hits' },
-  { label:'Country Hits',   emoji:'🤠', query:'country hits' },
+  { label:'90s Hip Hop',    emoji:'🔥', playlistId:'11236310244' },
+  { label:'90s Alt Rock',   emoji:'🎸', playlistId:'11225599624' },
+  { label:'2000s R&B',      emoji:'💜', playlistId:'2021626162'  },
+  { label:'80s Pop',        emoji:'🕹️', playlistId:'11798808421' },
+  { label:'Classic Rock',   emoji:'🤘', playlistId:'12334997451' },
+  { label:'2000s Pop Punk', emoji:'⚡', playlistId:'861202821'   },
+  { label:'90s Pop',        emoji:'💿', playlistId:'8027597282'  },
+  { label:'2000s Hip Hop',  emoji:'🎧', playlistId:'11153460024' },
+  { label:'80s Rock',       emoji:'🎵', playlistId:'1413309725'  },
+  { label:'Country Hits',   emoji:'🤠', playlistId:'1130102843'  },
 ];
 
 // Only filter out tracks that are clearly not the original artist performing the song
@@ -612,17 +612,19 @@ function artistNextRound() {
 
 // ── GENRE MODE ─────────────────────────────────────────────────────────────
 async function fetchGenreTracks(genre) {
-  setStatus('genre-loading','SEARCHING…');
+  setStatus('genre-loading','LOADING PLAYLIST…');
+  // Pull from curated Deezer playlist — two pages for variety
   let raw = [];
-  try { const r1 = await deezerGet('/search?q='+encodeURIComponent(genre.query)+'&limit=100&index=0'); raw = raw.concat(r1.data||[]); } catch(e) {}
-  try { const r2 = await deezerGet('/search?q='+encodeURIComponent(genre.query)+'&limit=100&index=100'); raw = raw.concat(r2.data||[]); } catch(e) {}
+  try { const p1 = await deezerGet('/playlist/'+genre.playlistId+'/tracks?limit=100&index=0'); raw = raw.concat(p1.data||[]); } catch(e) {}
+  try { const p2 = await deezerGet('/playlist/'+genre.playlistId+'/tracks?limit=100&index=100'); raw = raw.concat(p2.data||[]); } catch(e) {}
+
   const clean = raw.filter(t => t.preview && !isJunkTrack(t));
   const seen=new Set(); const deduped=[];
   for(const t of clean) {
     const k=norm(t.title)+'-'+norm(t.artist&&t.artist.name?t.artist.name:'');
     if(seen.has(k)) continue; seen.add(k); deduped.push(t);
   }
-  if(deduped.length<5) throw new Error('Only '+deduped.length+' tracks found. Try a different category.');
+  if(deduped.length<5) throw new Error('Only '+deduped.length+' tracks found in this playlist.');
   setStatus('genre-loading','');
   return shuffle(deduped);
 }

@@ -613,21 +613,16 @@ function artistNextRound() {
 // ── GENRE MODE ─────────────────────────────────────────────────────────────
 async function fetchGenreTracks(genre) {
   setStatus('genre-loading','SEARCHING…');
-  // Pull more results to have enough after filtering
-  const results = await deezerGet('/search?q='+encodeURIComponent(genre.query)+'&limit=100');
-  const raw = results.data||[];
-
-  // Filter out junk tracks
+  let raw = [];
+  try { const r1 = await deezerGet('/search?q='+encodeURIComponent(genre.query)+'&limit=100&index=0'); raw = raw.concat(r1.data||[]); } catch(e) {}
+  try { const r2 = await deezerGet('/search?q='+encodeURIComponent(genre.query)+'&limit=100&index=100'); raw = raw.concat(r2.data||[]); } catch(e) {}
   const clean = raw.filter(t => t.preview && !isJunkTrack(t));
-
-  // Dedupe by title+artist
   const seen=new Set(); const deduped=[];
   for(const t of clean) {
     const k=norm(t.title)+'-'+norm(t.artist&&t.artist.name?t.artist.name:'');
     if(seen.has(k)) continue; seen.add(k); deduped.push(t);
   }
-
-  if(deduped.length<5) throw new Error('Not enough clean tracks found. Try again.');
+  if(deduped.length<5) throw new Error('Only '+deduped.length+' tracks found. Try a different category.');
   setStatus('genre-loading','');
   return shuffle(deduped);
 }

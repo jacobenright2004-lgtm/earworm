@@ -31,11 +31,9 @@
     93%{text-shadow:4px -4px 0 var(--accent2),-4px 8px 0 rgba(232,255,62,.15);transform:skewX(0)}
   }
   .tagline { color:var(--muted); font-size:10px; letter-spacing:4px; text-transform:uppercase; margin-top:8px; }
-
   .screen { display:none; }
   .screen.active { display:block; animation:fadeIn .3s ease; }
   @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-
   .card { background:var(--surface); border:1px solid var(--border); border-radius:2px; padding:28px; margin-bottom:16px; position:relative; }
   .card::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; background:var(--accent); }
   .section-label { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:18px; }
@@ -49,14 +47,17 @@
   }
   input[type="text"]:focus { border-color:var(--accent); }
 
-  .snippet-options { display:flex; gap:10px; }
-  .snippet-btn {
-    flex:1; background:var(--bg); border:1px solid var(--border); color:var(--muted);
-    font-family:'Space Mono',monospace; font-size:13px; padding:12px 8px;
-    cursor:pointer; transition:all .15s; text-align:center; border-radius:1px;
+  /* Snippet dropdown */
+  .snippet-select {
+    width:100%; background:var(--bg); border:1px solid var(--border);
+    color:var(--text); font-family:'Space Mono',monospace; font-size:14px;
+    padding:12px 16px; outline:none; border-radius:1px; cursor:pointer;
+    appearance:none; -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 14px center;
   }
-  .snippet-btn:hover { border-color:var(--accent); color:var(--text); }
-  .snippet-btn.selected { background:var(--accent); border-color:var(--accent); color:#000; font-weight:700; }
+  .snippet-select:focus { border-color:var(--accent); }
+  .snippet-select option { background:var(--surface); }
 
   .btn-primary {
     width:100%; background:var(--accent); border:none; color:#000;
@@ -66,22 +67,20 @@
   .btn-primary:hover { background:#fff; box-shadow:0 8px 24px rgba(232,255,62,.25); transform:translateY(-1px); }
   .btn-primary:active { transform:translateY(0); }
   .btn-primary:disabled { opacity:.35; cursor:not-allowed; transform:none; box-shadow:none; }
-
   .btn-secondary {
     background:transparent; border:1px solid var(--border); color:var(--muted);
     font-family:'Space Mono',monospace; font-size:11px; padding:10px 20px;
     cursor:pointer; transition:all .15s; letter-spacing:1px; border-radius:1px;
   }
   .btn-secondary:hover { border-color:var(--accent); color:var(--text); }
-
   .error-msg {
     background:rgba(255,62,108,.08); border:1px solid rgba(255,62,108,.3);
     color:var(--wrong); padding:12px 16px; font-size:11px; line-height:1.7;
     margin-top:12px; border-radius:1px; display:none;
   }
 
-  /* ── HOME SCREEN ── */
-  .mode-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+  /* Home */
+  .mode-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
   .mode-card {
     background:var(--surface); border:1px solid var(--border); border-radius:2px;
     padding:28px 20px; cursor:pointer; transition:all .2s; text-align:center; position:relative;
@@ -93,7 +92,7 @@
   .mode-title { font-family:'Black Han Sans',sans-serif; font-size:20px; color:var(--accent); letter-spacing:1px; margin-bottom:6px; }
   .mode-desc { font-size:9px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; line-height:1.6; }
 
-  /* ── GENRE GRID ── */
+  /* Genre grid */
   .genre-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .genre-btn {
     background:var(--surface2); border:1px solid var(--border); color:var(--text);
@@ -103,11 +102,12 @@
   .genre-btn:hover { border-color:var(--accent); color:var(--accent); background:rgba(232,255,62,.05); }
   .genre-btn .genre-emoji { display:block; font-size:20px; margin-bottom:6px; }
 
-  /* ── PROGRESS ── */
+  /* Progress */
   .progress-bar-wrap { display:flex; gap:5px; margin-bottom:28px; }
   .progress-pip { flex:1; height:4px; background:var(--border); border-radius:2px; transition:background .3s; }
   .progress-pip.done { background:var(--correct); }
   .progress-pip.wrong { background:var(--wrong); }
+  .progress-pip.half { background:#f0a500; }
   .progress-pip.current { background:var(--accent); animation:pipPulse 1.2s ease-in-out infinite; }
   @keyframes pipPulse { 0%,100%{opacity:1}50%{opacity:.35} }
 
@@ -117,7 +117,7 @@
   .score-display { font-size:11px; color:var(--muted); letter-spacing:2px; text-align:right; }
   .score-display strong { color:var(--text); font-size:22px; display:block; }
 
-  /* ── PLAY BUTTON ── */
+  /* Play btn */
   .play-area { text-align:center; margin:28px 0 24px; }
   .play-btn {
     width:96px; height:96px; border-radius:50%; background:var(--surface2);
@@ -130,7 +130,7 @@
   .play-btn:disabled { opacity:.25; cursor:not-allowed; transform:none !important; }
   .snippet-label { font-size:10px; letter-spacing:3px; color:var(--accent); text-transform:uppercase; margin-top:10px; }
 
-  /* ── MULTIPLE CHOICE ── */
+  /* Multiple choice */
   .choices { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
   .choice-btn {
     width:100%; background:var(--surface2); border:1px solid var(--border);
@@ -152,33 +152,49 @@
   .choice-btn.wrong   .choice-letter { background:var(--wrong); color:#000; }
   .choice-btn.reveal  .choice-letter { background:var(--correct); color:#000; }
 
-  /* ── VOICE MODE ── */
-  .voice-area { text-align:center; margin-top:8px; }
+  /* Voice / genre answer area */
+  .voice-area { margin-top:8px; }
+  .voice-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
   .voice-btn {
-    width:80px; height:80px; border-radius:50%; background:var(--surface2);
-    border:2px solid var(--border); color:var(--muted); font-size:28px;
+    width:56px; height:56px; border-radius:50%; flex-shrink:0; background:var(--surface2);
+    border:2px solid var(--border); color:var(--muted); font-size:22px;
     cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; justify-content:center;
-    margin-bottom:12px;
   }
   .voice-btn:hover { border-color:var(--accent2); color:var(--accent2); }
   .voice-btn.listening { background:var(--accent2); border-color:var(--accent2); color:#fff; animation:voicePulse .6s ease-in-out infinite alternate; }
   @keyframes voicePulse { from{box-shadow:0 0 10px rgba(255,62,108,.3)} to{box-shadow:0 0 40px rgba(255,62,108,.7)} }
-  .voice-status { font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; min-height:16px; margin-bottom:12px; }
-  .voice-transcript { font-size:14px; color:var(--accent); min-height:20px; margin-bottom:16px; font-style:italic; }
+  .voice-status { font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; }
 
-  .voice-text-row { display:flex; gap:10px; margin-top:8px; }
-  .voice-text-row input { flex:1; font-size:14px; padding:12px 14px; }
+  .guess-inputs { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+  .guess-row { display:flex; gap:8px; align-items:center; }
+  .guess-row input { flex:1; font-size:13px; padding:11px 14px; }
+  .guess-label-tag {
+    font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted);
+    white-space:nowrap; width:48px; flex-shrink:0;
+  }
+
+  .submit-row { display:flex; gap:8px; margin-top:4px; }
   .voice-submit {
-    background:var(--accent); border:none; color:#000; font-family:'Black Han Sans',sans-serif;
-    font-size:15px; padding:12px 20px; cursor:pointer; transition:all .15s; border-radius:1px; white-space:nowrap;
+    flex:1; background:var(--accent); border:none; color:#000; font-family:'Black Han Sans',sans-serif;
+    font-size:16px; padding:13px; cursor:pointer; transition:all .15s; border-radius:1px;
   }
   .voice-submit:hover { background:#fff; }
   .voice-submit:disabled { opacity:.3; cursor:not-allowed; }
-
   .skip-link { display:block; text-align:center; margin-top:10px; font-size:10px; color:var(--muted); letter-spacing:2px; cursor:pointer; text-transform:uppercase; }
   .skip-link:hover { color:var(--accent); }
 
-  /* ── RESULT REVEAL ── */
+  .transcript-display { font-size:12px; color:var(--accent); min-height:18px; margin-bottom:8px; font-style:italic; text-align:center; }
+
+  /* Points badge */
+  .points-badge {
+    display:inline-block; background:var(--accent); color:#000;
+    font-family:'Black Han Sans',sans-serif; font-size:11px; padding:2px 8px;
+    border-radius:1px; letter-spacing:1px; margin-left:8px; vertical-align:middle;
+  }
+  .points-badge.half { background:#f0a500; }
+  .points-badge.zero { background:var(--wrong); color:#fff; }
+
+  /* Result */
   .result-reveal {
     padding:20px; border-radius:1px; text-align:center; margin:14px 0 0;
     animation:revealPop .3s cubic-bezier(.34,1.56,.64,1);
@@ -186,11 +202,13 @@
   @keyframes revealPop { from{transform:scale(.82);opacity:0} to{transform:scale(1);opacity:1} }
   .result-reveal.correct { background:rgba(62,255,163,.08); border:1px solid var(--correct); }
   .result-reveal.wrong   { background:rgba(255,62,108,.08); border:1px solid var(--wrong); }
+  .result-reveal.half    { background:rgba(240,165,0,.08);  border:1px solid #f0a500; }
   .result-icon { font-size:30px; margin-bottom:6px; }
   .result-text { font-family:'Black Han Sans',sans-serif; font-size:22px; margin-bottom:5px; }
   .correct .result-text { color:var(--correct); }
   .wrong   .result-text { color:var(--wrong); }
-  .correct-answer { font-size:11px; color:var(--muted); line-height:1.7; }
+  .half    .result-text { color:#f0a500; }
+  .correct-answer { font-size:11px; color:var(--muted); line-height:1.8; }
   .correct-answer strong { color:var(--text); }
 
   .next-btn {
@@ -200,7 +218,7 @@
   }
   .next-btn:hover { border-color:var(--accent); color:var(--accent); }
 
-  /* ── FINAL ── */
+  /* Final */
   .final-score { text-align:center; padding:36px 0 24px; }
   .final-num { font-family:'Black Han Sans',sans-serif; font-size:96px; line-height:1; color:var(--accent); text-shadow:4px 4px 0 var(--accent2); }
   .final-denom { font-size:20px; color:var(--muted); letter-spacing:4px; margin-bottom:12px; }
@@ -210,9 +228,10 @@
   .result-item:last-child { border-bottom:none; }
   .result-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
   .result-dot.c { background:var(--correct); }
+  .result-dot.h { background:#f0a500; }
   .result-dot.w { background:var(--wrong); }
   .result-song { flex:1; color:var(--text); }
-  .result-guess { color:var(--muted); font-style:italic; font-size:10px; }
+  .result-pts { color:var(--muted); font-size:10px; flex-shrink:0; }
   .play-again-wrap { display:flex; gap:10px; margin-top:20px; }
 
   .spinner {
@@ -244,7 +263,7 @@
       <div class="mode-card" onclick="show('screen-genre')">
         <div class="mode-icon">🎵</div>
         <div class="mode-title">GENRE</div>
-        <div class="mode-desc">Pick an era or genre.<br>Yell out the song.</div>
+        <div class="mode-desc">Pick an era.<br>Guess song + artist.</div>
       </div>
     </div>
   </div>
@@ -261,11 +280,14 @@
       </div>
       <div class="input-group">
         <label>Snippet Length</label>
-        <div class="snippet-options">
-          <button class="snippet-btn" data-val="0.25">0.25s</button>
-          <button class="snippet-btn selected" data-val="0.5">0.5s</button>
-          <button class="snippet-btn" data-val="1">1s</button>
-        </div>
+        <select class="snippet-select" id="artist-snippet-select">
+          <option value="0.25">0.25 seconds</option>
+          <option value="0.5" selected>0.5 seconds</option>
+          <option value="1">1 second</option>
+          <option value="2">2 seconds</option>
+          <option value="3">3 seconds</option>
+          <option value="4">4 seconds</option>
+        </select>
       </div>
     </div>
     <div id="artist-error" class="error-msg"></div>
@@ -280,19 +302,22 @@
       <div class="section-label">// Genre Mode — Pick a Category</div>
       <div class="genre-grid" id="genre-grid"></div>
     </div>
-    <div class="card" style="margin-top:0;">
+    <div class="card">
       <div class="section-label">// Snippet Length</div>
-      <div class="snippet-options">
-        <button class="snippet-btn genre-snippet-btn" data-val="0.25">0.25s</button>
-        <button class="snippet-btn genre-snippet-btn selected" data-val="0.5">0.5s</button>
-        <button class="snippet-btn genre-snippet-btn" data-val="1">1s</button>
-      </div>
+      <select class="snippet-select" id="genre-snippet-select">
+        <option value="0.25">0.25 seconds</option>
+        <option value="0.5" selected>0.5 seconds</option>
+        <option value="1">1 second</option>
+        <option value="2">2 seconds</option>
+        <option value="3">3 seconds</option>
+        <option value="4">4 seconds</option>
+      </select>
     </div>
     <div id="genre-error" class="error-msg"></div>
     <div class="loading-status" id="genre-loading"></div>
   </div>
 
-  <!-- GAME: ARTIST (multiple choice) -->
+  <!-- GAME: ARTIST -->
   <div class="screen" id="screen-game-artist">
     <div class="progress-bar-wrap" id="artist-progress"></div>
     <div class="round-info">
@@ -309,11 +334,11 @@
     </div>
   </div>
 
-  <!-- GAME: GENRE (voice) -->
+  <!-- GAME: GENRE -->
   <div class="screen" id="screen-game-genre">
     <div class="progress-bar-wrap" id="genre-progress"></div>
     <div class="round-info">
-      <div class="round-num" id="genre-round-num">1 <span>/ 10</span></div>
+      <div class="round-num" id="genre-round-num">1 <span>/ 5</span></div>
       <div class="score-display">Score<strong id="genre-score-val">0</strong></div>
     </div>
     <div class="card">
@@ -323,13 +348,25 @@
       </div>
 
       <div class="voice-area" id="voice-area">
-        <button class="voice-btn" id="voice-btn" onclick="toggleVoice()">🎤</button>
-        <div class="voice-status" id="voice-status">TAP MIC TO GUESS</div>
-        <div class="voice-transcript" id="voice-transcript"></div>
-        <div class="voice-text-row">
-          <input type="text" id="genre-text-input" placeholder="Or type your guess…" autocomplete="off"
-            onkeydown="if(event.key==='Enter') submitGenreText()">
-          <button class="voice-submit" id="genre-submit-btn" onclick="submitGenreText()">GO</button>
+        <div class="voice-row">
+          <button class="voice-btn" id="voice-btn" onclick="toggleVoice()">🎤</button>
+          <div class="voice-status" id="voice-status">TAP MIC TO FILL FIELDS</div>
+        </div>
+        <div class="transcript-display" id="voice-transcript"></div>
+
+        <div class="guess-inputs">
+          <div class="guess-row">
+            <span class="guess-label-tag">SONG</span>
+            <input type="text" id="genre-song-input" placeholder="Song title…" autocomplete="off">
+          </div>
+          <div class="guess-row">
+            <span class="guess-label-tag">ARTIST</span>
+            <input type="text" id="genre-artist-input" placeholder="Artist name…" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <button class="voice-submit" id="genre-submit-btn" onclick="submitGenreGuess()">SUBMIT</button>
         </div>
         <span class="skip-link" onclick="genreSkip()">Skip this one</span>
       </div>
@@ -359,34 +396,39 @@
 <audio id="preview-audio" preload="none"></audio>
 
 <script>
-// ── Constants ──────────────────────────────────────────────────────────────
+// ── Genres ─────────────────────────────────────────────────────────────────
 const GENRES = [
-  { label:'90s Hip Hop',    emoji:'🔥', query:'90s hip hop', deezerGenre:116 },
-  { label:'90s Alt Rock',   emoji:'🎸', query:'90s alternative rock', deezerGenre:152 },
-  { label:'2000s R&B',      emoji:'💜', query:'2000s r&b', deezerGenre:165 },
-  { label:'80s Pop',        emoji:'🕹️', query:'80s pop', deezerGenre:132 },
-  { label:'Classic Rock',   emoji:'🤘', query:'classic rock', deezerGenre:152 },
-  { label:'2000s Pop Punk', emoji:'⚡', query:'2000s pop punk', deezerGenre:152 },
-  { label:'90s Pop',        emoji:'💿', query:'90s pop', deezerGenre:132 },
-  { label:'2000s Hip Hop',  emoji:'🎧', query:'2000s hip hop', deezerGenre:116 },
-  { label:'80s Rock',       emoji:'🎵', query:'80s rock', deezerGenre:152 },
-  { label:'Country Hits',   emoji:'🤠', query:'country hits', deezerGenre:6   },
+  { label:'90s Hip Hop',    emoji:'🔥', query:'90s rap hip hop' },
+  { label:'90s Alt Rock',   emoji:'🎸', query:'90s alternative rock grunge' },
+  { label:'2000s R&B',      emoji:'💜', query:'2000s r&b soul' },
+  { label:'80s Pop',        emoji:'🕹️', query:'80s pop hits' },
+  { label:'Classic Rock',   emoji:'🤘', query:'classic rock 70s 80s' },
+  { label:'2000s Pop Punk', emoji:'⚡', query:'2000s pop punk emo' },
+  { label:'90s Pop',        emoji:'💿', query:'90s pop hits' },
+  { label:'2000s Hip Hop',  emoji:'🎧', query:'2000s hip hop rap' },
+  { label:'80s Rock',       emoji:'🎵', query:'80s rock hits' },
+  { label:'Country Hits',   emoji:'🤠', query:'country hits' },
 ];
 
-// ── Shared state ───────────────────────────────────────────────────────────
-let snippetDuration = 0.5;
-let genreSnippetDuration = 0.5;
+// Words that indicate a non-original release — filter these out
+const JUNK_WORDS = [
+  'acoustic','live','demo','cover','karaoke','instrumental','remix','remaster',
+  'remastered','tribute','version','edit','radio edit','extended','reprise',
+  'soundtrack','motion picture','unplugged','session','commentary','interlude',
+  'skit','intro','outro','bonus','deluxe','medley','mashup','mix','dj '
+];
+
+function isJunkTrack(track) {
+  const titleLow = (track.title || '').toLowerCase();
+  const albumLow = (track.album && track.album.title ? track.album.title : '').toLowerCase();
+  return JUNK_WORDS.some(w => titleLow.includes(w) || albumLow.includes(w));
+}
+
+// ── State ──────────────────────────────────────────────────────────────────
 const audio = document.getElementById('preview-audio');
-
-// Artist mode state
-let aGameTracks = [], aTrackPool = [], aRound = 0, aScore = 0, aResults = [], aRevealed = false, aSeek = 0, aStopTimer = null;
-
-// Genre mode state
-let gGameTracks = [], gRound = 0, gScore = 0, gResults = [], gRevealed = false, gSeek = 0, gStopTimer = null, gLastMode = null;
-
-// Speech recognition
-let recognition = null;
-let isListening = false;
+let aGameTracks=[], aTrackPool=[], aRound=0, aScore=0, aResults=[], aRevealed=false, aSeek=0, aStopTimer=null;
+let gGameTracks=[], gRound=0, gScore=0, gResults=[], gRevealed=false, gSeek=0, gStopTimer=null, gLastIndex=null;
+let recognition=null, isListening=false;
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function show(id) {
@@ -394,11 +436,10 @@ function show(id) {
   document.getElementById(id).classList.add('active');
   stopVoice();
 }
-
-function showError(id, msg) { const e = document.getElementById(id); e.innerHTML = msg; e.style.display = 'block'; }
-function hideError(id) { document.getElementById(id).style.display = 'none'; }
-function setStatus(id, msg) { const el = document.getElementById(id); if(el) el.textContent = msg; }
-function shuffle(a) { return a.sort(() => Math.random() - 0.5); }
+function showError(id, msg) { const e=document.getElementById(id); e.innerHTML=msg; e.style.display='block'; }
+function hideError(id) { document.getElementById(id).style.display='none'; }
+function setStatus(id, msg) { const el=document.getElementById(id); if(el) el.textContent=msg; }
+function shuffle(a) { return a.sort(()=>Math.random()-.5); }
 function norm(s) {
   return String(s).toLowerCase()
     .replace(/[\(\[\{].*?[\)\]\}]/g,'')
@@ -409,375 +450,429 @@ function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function checkAnswer(guess, correct) {
-  const g = norm(guess), c = norm(correct);
-  if (!g) return false;
-  if (g === c) return true;
-  if (g.length >= 4 && (c.includes(g) || g.includes(c))) return true;
+  const g=norm(guess), c=norm(correct);
+  if(!g) return false;
+  if(g===c) return true;
+  if(g.length>=4 && (c.includes(g)||g.includes(c))) return true;
   return false;
 }
-
-// ── Snippet selectors ──────────────────────────────────────────────────────
-document.querySelectorAll('.snippet-btn:not(.genre-snippet-btn)').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.snippet-btn:not(.genre-snippet-btn)').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    snippetDuration = parseFloat(btn.dataset.val);
-  });
-});
-document.querySelectorAll('.genre-snippet-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.genre-snippet-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    genreSnippetDuration = parseFloat(btn.dataset.val);
-  });
-});
+function getSnippetDuration(selectId) {
+  return parseFloat(document.getElementById(selectId).value);
+}
 
 // ── Genre grid ─────────────────────────────────────────────────────────────
-function buildGenreGrid() {
-  document.getElementById('genre-grid').innerHTML = GENRES.map((g, i) =>
-    '<button class="genre-btn" onclick="startGenreGame(' + i + ')">' +
-      '<span class="genre-emoji">' + g.emoji + '</span>' + escHtml(g.label) +
-    '</button>'
-  ).join('');
-}
-buildGenreGrid();
+document.getElementById('genre-grid').innerHTML = GENRES.map((g,i) =>
+  '<button class="genre-btn" onclick="startGenreGame('+i+')">' +
+    '<span class="genre-emoji">'+g.emoji+'</span>'+escHtml(g.label)+
+  '</button>'
+).join('');
 
 // ── API ────────────────────────────────────────────────────────────────────
 async function deezerGet(path) {
   const res = await fetch('/.netlify/functions/deezer?path=' + encodeURIComponent(path));
-  if (!res.ok) throw new Error('API error ' + res.status);
+  if(!res.ok) throw new Error('API error '+res.status);
   const data = await res.json();
-  if (data && data.error) throw new Error(data.error.message || 'Deezer error');
+  if(data && data.error) throw new Error(data.error.message||'Deezer error');
   return data;
 }
 
 // ── ARTIST MODE ────────────────────────────────────────────────────────────
 async function fetchArtistTracks(artistName) {
-  setStatus('artist-loading', 'SEARCHING ARTIST…');
-  const search = await deezerGet('/search/artist?q=' + encodeURIComponent(artistName) + '&limit=1');
-  if (!search.data || !search.data.length) throw new Error('Artist "' + artistName + '" not found.');
+  setStatus('artist-loading','SEARCHING ARTIST…');
+  const search = await deezerGet('/search/artist?q='+encodeURIComponent(artistName)+'&limit=1');
+  if(!search.data||!search.data.length) throw new Error('Artist "'+artistName+'" not found.');
   const artist = search.data[0];
 
-  setStatus('artist-loading', 'LOADING DISCOGRAPHY…');
-  let albums = [], nextPath = '/artist/' + artist.id + '/albums?limit=50';
-  while (nextPath && albums.length < 200) {
+  setStatus('artist-loading','LOADING DISCOGRAPHY…');
+  let albums=[], nextPath='/artist/'+artist.id+'/albums?limit=50';
+  while(nextPath && albums.length<200) {
     const page = await deezerGet(nextPath);
-    albums = albums.concat(page.data || []);
+    albums = albums.concat(page.data||[]);
     nextPath = page.next ? page.next.replace('https://api.deezer.com','') : null;
   }
-  if (!albums.length) throw new Error('No albums found.');
+  if(!albums.length) throw new Error('No albums found.');
   shuffle(albums);
 
-  const seen = new Set(); let allTracks = [];
-  for (const album of albums) {
-    if (allTracks.length >= 80) break;
-    setStatus('artist-loading', 'FETCHING TRACKS… (' + allTracks.length + ' found)');
+  const seen=new Set(); let allTracks=[];
+  for(const album of albums) {
+    if(allTracks.length>=80) break;
+    setStatus('artist-loading','FETCHING TRACKS… ('+allTracks.length+' found)');
     try {
-      const ab = await deezerGet('/album/' + album.id + '/tracks?limit=50');
-      for (const t of (ab.data || [])) {
-        if (!t.preview) continue;
-        const key = norm(t.title);
-        if (seen.has(key)) continue;
+      const ab = await deezerGet('/album/'+album.id+'/tracks?limit=50');
+      for(const t of (ab.data||[])) {
+        if(!t.preview) continue;
+        // Attach album title for junk filtering
+        t.album = { title: album.title };
+        if(isJunkTrack(t)) continue;
+        const key=norm(t.title);
+        if(seen.has(key)) continue;
         seen.add(key); allTracks.push(t);
       }
     } catch(e) {}
   }
-  if (allTracks.length < 10) throw new Error('Not enough previewable tracks for "' + artist.name + '".');
-  setStatus('artist-loading', '');
+  if(allTracks.length<10) throw new Error('Not enough previewable tracks for "'+artist.name+'".');
+  setStatus('artist-loading','');
   return shuffle(allTracks);
 }
 
 async function startArtistGame() {
   hideError('artist-error');
   const name = document.getElementById('artist-input').value.trim();
-  if (!name) return showError('artist-error', 'Please enter an artist name.');
+  if(!name) return showError('artist-error','Please enter an artist name.');
   const btn = document.getElementById('artist-start-btn');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>LOADING…';
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>LOADING…';
   try {
     const all = await fetchArtistTracks(name);
-    aTrackPool = all; aGameTracks = all.slice(0,10);
-    aRound = 0; aScore = 0; aResults = [];
+    aTrackPool=all; aGameTracks=all.slice(0,10);
+    aRound=0; aScore=0; aResults=[];
     buildArtistProgress(); show('screen-game-artist'); artistLoadRound();
   } catch(err) {
-    showError('artist-error', err.message || 'Something went wrong.');
-    setStatus('artist-loading', '');
-  } finally { btn.disabled = false; btn.innerHTML = 'START GAME'; }
+    showError('artist-error', err.message||'Something went wrong.');
+    setStatus('artist-loading','');
+  } finally { btn.disabled=false; btn.innerHTML='START GAME'; }
 }
 
 function buildArtistProgress() {
-  const bar = document.getElementById('artist-progress'); bar.innerHTML = '';
-  aGameTracks.forEach((_, i) => {
-    const p = document.createElement('div');
-    p.className = 'progress-pip' + (i===0?' current':''); p.id = 'apip-'+i; bar.appendChild(p);
+  const bar=document.getElementById('artist-progress'); bar.innerHTML='';
+  aGameTracks.forEach((_,i) => {
+    const p=document.createElement('div');
+    p.className='progress-pip'+(i===0?' current':''); p.id='apip-'+i; bar.appendChild(p);
   });
 }
-function updateArtistPip(i, correct) {
-  const pip = document.getElementById('apip-'+i);
+function updateArtistPip(i,correct) {
+  const pip=document.getElementById('apip-'+i);
   pip.classList.remove('current'); pip.classList.add(correct?'done':'wrong');
-  const next = document.getElementById('apip-'+(i+1)); if(next) next.classList.add('current');
+  const next=document.getElementById('apip-'+(i+1)); if(next) next.classList.add('current');
 }
 
 function artistLoadRound() {
-  aRevealed = false; clearTimeout(aStopTimer); audio.pause();
-  aSeek = 30 * (0.20 + Math.random() * 0.40);
-  document.getElementById('artist-round-num').innerHTML = (aRound+1) + ' <span>/ ' + aGameTracks.length + '</span>';
-  document.getElementById('artist-score-val').textContent = aScore;
-  document.getElementById('artist-snippet-label').textContent = snippetDuration + 's snippet';
-  document.getElementById('artist-next-btn').style.display = 'none';
-  const pb = document.getElementById('artist-play-btn'); pb.className='play-btn'; pb.textContent='▶'; pb.disabled=false;
+  aRevealed=false; clearTimeout(aStopTimer); audio.pause();
+  aSeek=30*(0.20+Math.random()*0.40);
+  const dur=getSnippetDuration('artist-snippet-select');
+  document.getElementById('artist-round-num').innerHTML=(aRound+1)+' <span>/ '+aGameTracks.length+'</span>';
+  document.getElementById('artist-score-val').textContent=aScore;
+  document.getElementById('artist-snippet-label').textContent=dur+'s snippet';
+  document.getElementById('artist-next-btn').style.display='none';
+  const pb=document.getElementById('artist-play-btn'); pb.className='play-btn'; pb.textContent='▶'; pb.disabled=false;
   buildArtistChoices();
-  audio.src = aGameTracks[aRound].preview; audio.load();
+  audio.src=aGameTracks[aRound].preview; audio.load();
 }
 
 function buildArtistChoices() {
-  const correct = aGameTracks[aRound].title;
-  const gameKeys = new Set(aGameTracks.map(t => norm(t.title)));
-  const wrongPool = aTrackPool.filter(t => norm(t.title) !== norm(correct) && !gameKeys.has(norm(t.title)));
+  const correct=aGameTracks[aRound].title;
+  const gameKeys=new Set(aGameTracks.map(t=>norm(t.title)));
+  const wrongPool=aTrackPool.filter(t=>norm(t.title)!==norm(correct)&&!gameKeys.has(norm(t.title)));
   shuffle(wrongPool);
-  const wrongs = wrongPool.slice(0,3).map(t => t.title);
-  while(wrongs.length < 3) wrongs.push('Track '+(wrongs.length+1));
-  const options = shuffle([correct, ...wrongs]);
-  const letters = ['A','B','C','D'];
-  document.getElementById('artist-choices').innerHTML = options.map((title,i) =>
+  const wrongs=wrongPool.slice(0,3).map(t=>t.title);
+  while(wrongs.length<3) wrongs.push('Track '+(wrongs.length+1));
+  const options=shuffle([correct,...wrongs]);
+  const letters=['A','B','C','D'];
+  document.getElementById('artist-choices').innerHTML=options.map((title,i)=>
     '<button class="choice-btn" id="achoice-'+i+'" onclick="artistSelectChoice('+i+')">' +
       '<span class="choice-letter">'+letters[i]+'</span><span>'+escHtml(title)+'</span></button>'
   ).join('');
-  window._aOptions = options; window._aCorrect = correct;
+  window._aOptions=options; window._aCorrect=correct;
 }
 
 function artistPlaySnippet() {
-  clearTimeout(aStopTimer); audio.pause(); audio.currentTime = aSeek;
-  const btn = document.getElementById('artist-play-btn');
-  btn.className = 'play-btn playing'; btn.textContent = '■';
-  audio.play().catch(e => console.warn(e));
-  aStopTimer = setTimeout(() => { audio.pause(); btn.className='play-btn'; btn.textContent='▶'; }, snippetDuration*1000);
+  const dur=getSnippetDuration('artist-snippet-select');
+  clearTimeout(aStopTimer); audio.pause(); audio.currentTime=aSeek;
+  const btn=document.getElementById('artist-play-btn');
+  btn.className='play-btn playing'; btn.textContent='■';
+  audio.play().catch(e=>console.warn(e));
+  aStopTimer=setTimeout(()=>{ audio.pause(); btn.className='play-btn'; btn.textContent='▶'; }, dur*1000);
 }
 
 function artistSelectChoice(index) {
-  if(aRevealed) return; aRevealed = true;
+  if(aRevealed) return; aRevealed=true;
   clearTimeout(aStopTimer); audio.pause();
-  const chosen = window._aOptions[index], correct = window._aCorrect;
-  const ok = norm(chosen) === norm(correct);
+  const chosen=window._aOptions[index], correct=window._aCorrect;
+  const ok=norm(chosen)===norm(correct);
   if(ok) aScore++;
-  aResults.push({track:correct, guess:chosen, correct:ok});
-  updateArtistPip(aRound, ok);
-  document.getElementById('artist-score-val').textContent = aScore;
-  document.querySelectorAll('.choice-btn').forEach((btn,i) => {
-    btn.disabled = true;
-    const t = window._aOptions[i];
+  aResults.push({track:correct, guess:chosen, correct:ok, pts:ok?1:0, maxPts:1});
+  updateArtistPip(aRound,ok);
+  document.getElementById('artist-score-val').textContent=aScore;
+  document.querySelectorAll('.choice-btn').forEach((btn,i)=>{
+    btn.disabled=true;
+    const t=window._aOptions[i];
     if(norm(t)===norm(correct)) btn.classList.add(i===index?'correct':'reveal');
     else if(i===index) btn.classList.add('wrong');
   });
-  const pb = document.getElementById('artist-play-btn'); pb.className='play-btn'; pb.textContent='▶';
-  const nb = document.getElementById('artist-next-btn'); nb.style.display='block';
-  nb.textContent = aRound+1 < aGameTracks.length ? 'NEXT SONG →' : 'SEE RESULTS →';
+  const pb=document.getElementById('artist-play-btn'); pb.className='play-btn'; pb.textContent='▶';
+  const nb=document.getElementById('artist-next-btn'); nb.style.display='block';
+  nb.textContent=aRound+1<aGameTracks.length?'NEXT SONG →':'SEE RESULTS →';
 }
 
 function artistNextRound() {
   aRound++;
-  if(aRound >= aGameTracks.length) showFinal('artist');
+  if(aRound>=aGameTracks.length) showFinal('artist');
   else artistLoadRound();
 }
 
 // ── GENRE MODE ─────────────────────────────────────────────────────────────
 async function fetchGenreTracks(genre) {
-  setStatus('genre-loading', 'SEARCHING…');
-  // Search Deezer by query term, get a big pool
-  const results = await deezerGet('/search?q=' + encodeURIComponent(genre.query) + '&limit=100');
-  const tracks = (results.data || []).filter(t => t.preview);
-  if(tracks.length < 10) throw new Error('Not enough tracks found for this genre. Try again.');
-  setStatus('genre-loading', '');
-  return shuffle(tracks);
+  setStatus('genre-loading','SEARCHING…');
+  // Pull more results to have enough after filtering
+  const results = await deezerGet('/search?q='+encodeURIComponent(genre.query)+'&limit=100');
+  const raw = results.data||[];
+
+  // Filter out junk tracks
+  const clean = raw.filter(t => t.preview && !isJunkTrack(t));
+
+  // Dedupe by title+artist
+  const seen=new Set(); const deduped=[];
+  for(const t of clean) {
+    const k=norm(t.title)+'-'+norm(t.artist&&t.artist.name?t.artist.name:'');
+    if(seen.has(k)) continue; seen.add(k); deduped.push(t);
+  }
+
+  if(deduped.length<5) throw new Error('Not enough clean tracks found. Try again.');
+  setStatus('genre-loading','');
+  return shuffle(deduped);
 }
 
 async function startGenreGame(genreIndex) {
   hideError('genre-error');
-  const genre = GENRES[genreIndex];
-  gLastMode = { type:'genre', index:genreIndex };
-  setStatus('genre-loading', 'LOADING…');
+  gLastIndex=genreIndex;
+  const genre=GENRES[genreIndex];
+  setStatus('genre-loading','LOADING…');
   try {
-    const all = await fetchGenreTracks(genre);
-    const seen = new Set(); const deduped = [];
-    for(const t of all) {
-      const k = norm(t.title + ' ' + t.artist.name);
-      if(seen.has(k)) continue; seen.add(k); deduped.push(t);
-    }
-    gGameTracks = deduped.slice(0,10);
-    gRound = 0; gScore = 0; gResults = [];
+    const all=await fetchGenreTracks(genre);
+    gGameTracks=all.slice(0,5);
+    gRound=0; gScore=0; gResults=[];
     buildGenreProgress(); show('screen-game-genre'); genreLoadRound();
   } catch(err) {
-    showError('genre-error', err.message || 'Something went wrong.');
-    setStatus('genre-loading', '');
+    showError('genre-error', err.message||'Something went wrong.');
+    setStatus('genre-loading','');
   }
 }
 
 function buildGenreProgress() {
-  const bar = document.getElementById('genre-progress'); bar.innerHTML = '';
-  gGameTracks.forEach((_, i) => {
-    const p = document.createElement('div');
-    p.className = 'progress-pip' + (i===0?' current':''); p.id = 'gpip-'+i; bar.appendChild(p);
+  const bar=document.getElementById('genre-progress'); bar.innerHTML='';
+  gGameTracks.forEach((_,i)=>{
+    const p=document.createElement('div');
+    p.className='progress-pip'+(i===0?' current':''); p.id='gpip-'+i; bar.appendChild(p);
   });
 }
-function updateGenrePip(i, correct) {
-  const pip = document.getElementById('gpip-'+i);
-  pip.classList.remove('current'); pip.classList.add(correct?'done':'wrong');
-  const next = document.getElementById('gpip-'+(i+1)); if(next) next.classList.add('current');
+function updateGenrePip(i,pts) {
+  const pip=document.getElementById('gpip-'+i);
+  pip.classList.remove('current');
+  pip.classList.add(pts===2?'done':pts===1?'half':'wrong');
+  const next=document.getElementById('gpip-'+(i+1)); if(next) next.classList.add('current');
 }
 
 function genreLoadRound() {
-  gRevealed = false; clearTimeout(gStopTimer); audio.pause(); stopVoice();
-  gSeek = 30 * (0.20 + Math.random() * 0.40);
-  document.getElementById('genre-round-num').innerHTML = (gRound+1) + ' <span>/ ' + gGameTracks.length + '</span>';
-  document.getElementById('genre-score-val').textContent = gScore;
-  document.getElementById('genre-snippet-label').textContent = genreSnippetDuration + 's snippet';
-  document.getElementById('genre-next-btn').style.display = 'none';
-  document.getElementById('voice-area').style.display = 'block';
-  document.getElementById('genre-result-section').style.display = 'none';
-  document.getElementById('genre-text-input').value = '';
-  document.getElementById('genre-text-input').disabled = false;
-  document.getElementById('genre-submit-btn').disabled = false;
-  document.getElementById('voice-transcript').textContent = '';
-  document.getElementById('voice-status').textContent = 'TAP MIC TO GUESS';
-  const vb = document.getElementById('voice-btn'); vb.className='voice-btn'; vb.textContent='🎤';
-  const pb = document.getElementById('genre-play-btn'); pb.className='play-btn'; pb.textContent='▶'; pb.disabled=false;
-  audio.src = gGameTracks[gRound].preview; audio.load();
+  gRevealed=false; clearTimeout(gStopTimer); audio.pause(); stopVoice();
+  gSeek=30*(0.20+Math.random()*0.40);
+  const dur=getSnippetDuration('genre-snippet-select');
+  document.getElementById('genre-round-num').innerHTML=(gRound+1)+' <span>/ 5</span>';
+  document.getElementById('genre-score-val').textContent=gScore;
+  document.getElementById('genre-snippet-label').textContent=dur+'s snippet';
+  document.getElementById('genre-next-btn').style.display='none';
+  document.getElementById('voice-area').style.display='block';
+  document.getElementById('genre-result-section').style.display='none';
+  document.getElementById('genre-song-input').value='';
+  document.getElementById('genre-artist-input').value='';
+  document.getElementById('genre-song-input').disabled=false;
+  document.getElementById('genre-artist-input').disabled=false;
+  document.getElementById('genre-submit-btn').disabled=false;
+  document.getElementById('voice-transcript').textContent='';
+  document.getElementById('voice-status').textContent='TAP MIC TO FILL FIELDS';
+  const vb=document.getElementById('voice-btn'); vb.className='voice-btn'; vb.textContent='🎤';
+  const pb=document.getElementById('genre-play-btn'); pb.className='play-btn'; pb.textContent='▶'; pb.disabled=false;
+  audio.src=gGameTracks[gRound].preview; audio.load();
 }
 
 function genrePlaySnippet() {
-  clearTimeout(gStopTimer); audio.pause(); audio.currentTime = gSeek;
-  const btn = document.getElementById('genre-play-btn');
-  btn.className = 'play-btn playing'; btn.textContent = '■';
-  audio.play().catch(e => console.warn(e));
-  gStopTimer = setTimeout(() => { audio.pause(); btn.className='play-btn'; btn.textContent='▶'; }, genreSnippetDuration*1000);
+  const dur=getSnippetDuration('genre-snippet-select');
+  clearTimeout(gStopTimer); audio.pause(); audio.currentTime=gSeek;
+  const btn=document.getElementById('genre-play-btn');
+  btn.className='play-btn playing'; btn.textContent='■';
+  audio.play().catch(e=>console.warn(e));
+  gStopTimer=setTimeout(()=>{ audio.pause(); btn.className='play-btn'; btn.textContent='▶'; }, dur*1000);
 }
 
-function submitGenreGuess(guess) {
-  if(gRevealed) return; gRevealed = true;
-  clearTimeout(gStopTimer); audio.pause(); stopVoice();
-  const track = gGameTracks[gRound];
-  const correct = checkAnswer(guess, track.title);
-  if(correct) gScore++;
-  gResults.push({track: track.title + ' — ' + track.artist.name, guess, correct});
-  updateGenrePip(gRound, correct);
-  document.getElementById('genre-score-val').textContent = gScore;
-  document.getElementById('genre-text-input').disabled = true;
-  document.getElementById('genre-submit-btn').disabled = true;
-  document.getElementById('voice-area').style.display = 'none';
-  const pb = document.getElementById('genre-play-btn'); pb.className='play-btn'; pb.textContent='▶';
-  const rd = document.getElementById('genre-result-section');
-  rd.style.display = 'block';
-  rd.innerHTML =
-    '<div class="result-reveal '+(correct?'correct':'wrong')+'">' +
-      '<div class="result-icon">'+(correct?'✓':'✗')+'</div>' +
-      '<div class="result-text">'+(correct?'CORRECT!':(guess?'NOPE':'SKIPPED'))+'</div>' +
+function submitGenreGuess() {
+  if(gRevealed) return;
+  const songGuess=document.getElementById('genre-song-input').value.trim();
+  const artistGuess=document.getElementById('genre-artist-input').value.trim();
+  revealGenreResult(songGuess, artistGuess);
+}
+
+function genreSkip() {
+  if(!gRevealed) revealGenreResult('','');
+}
+
+function revealGenreResult(songGuess, artistGuess) {
+  gRevealed=true; clearTimeout(gStopTimer); audio.pause(); stopVoice();
+  const track=gGameTracks[gRound];
+  const correctSong=track.title;
+  const correctArtist=track.artist&&track.artist.name?track.artist.name:'';
+
+  const songOk=checkAnswer(songGuess, correctSong);
+  const artistOk=checkAnswer(artistGuess, correctArtist);
+  const pts=(songOk?1:0)+(artistOk?1:0);
+  gScore+=pts;
+  gResults.push({track:correctSong, artist:correctArtist, songGuess, artistGuess, songOk, artistOk, pts});
+  updateGenrePip(gRound, pts);
+
+  document.getElementById('genre-score-val').textContent=gScore;
+  document.getElementById('genre-song-input').disabled=true;
+  document.getElementById('genre-artist-input').disabled=true;
+  document.getElementById('genre-submit-btn').disabled=true;
+  document.getElementById('voice-area').style.display='none';
+  const pb=document.getElementById('genre-play-btn'); pb.className='play-btn'; pb.textContent='▶';
+
+  const label=pts===2?'CORRECT!':pts===1?'HALF POINTS':'NOPE';
+  const cls=pts===2?'correct':pts===1?'half':'wrong';
+  const icon=pts===2?'✓':pts===1?'½':'✗';
+
+  const rd=document.getElementById('genre-result-section');
+  rd.style.display='block';
+  rd.innerHTML=
+    '<div class="result-reveal '+cls+'">' +
+      '<div class="result-icon">'+icon+'</div>' +
+      '<div class="result-text">'+label+' <span class="points-badge'+(pts===0?' zero':pts===1?' half':'')+'">'+pts+'/2 pts</span></div>' +
       '<div class="correct-answer">' +
-        (!correct && guess ? 'You said: <em>'+escHtml(guess)+'</em><br>' : '') +
-        'Song: <strong>'+escHtml(track.title)+'</strong><br>' +
-        '<span style="color:var(--muted);font-size:10px;">'+escHtml(track.artist.name)+'</span>' +
+        'Song: <strong>'+escHtml(correctSong)+'</strong>'+(songOk?' ✓':' ✗')+'<br>' +
+        'Artist: <strong>'+escHtml(correctArtist)+'</strong>'+(artistOk?' ✓':' ✗') +
+        (!songOk&&songGuess?'<br><span style="color:var(--muted)">You said: '+escHtml(songGuess)+'</span>':'') +
+        (!artistOk&&artistGuess?'<br><span style="color:var(--muted)">You said: '+escHtml(artistGuess)+'</span>':'') +
       '</div>' +
     '</div>';
-  const nb = document.getElementById('genre-next-btn'); nb.style.display='block';
-  nb.textContent = gRound+1 < gGameTracks.length ? 'NEXT SONG →' : 'SEE RESULTS →';
-}
 
-function submitGenreText() {
-  const val = document.getElementById('genre-text-input').value.trim();
-  if(!val) return;
-  submitGenreGuess(val);
+  const nb=document.getElementById('genre-next-btn'); nb.style.display='block';
+  nb.textContent=gRound+1<gGameTracks.length?'NEXT SONG →':'SEE RESULTS →';
 }
-
-function genreSkip() { submitGenreGuess(''); }
 
 function genreNextRound() {
   gRound++;
-  if(gRound >= gGameTracks.length) showFinal('genre');
+  if(gRound>=gGameTracks.length) showFinal('genre');
   else genreLoadRound();
 }
 
-// ── VOICE RECOGNITION ──────────────────────────────────────────────────────
+// ── VOICE ──────────────────────────────────────────────────────────────────
+// Voice fills whichever field is empty, or song first then artist
+let voicePhase = 'song'; // 'song' or 'artist'
+
 function initRecognition() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SpeechRecognition) return null;
-  const r = new SpeechRecognition();
-  r.continuous = false; r.interimResults = true; r.lang = 'en-US';
-  r.onstart = () => {
-    isListening = true;
-    document.getElementById('voice-btn').className = 'voice-btn listening';
-    document.getElementById('voice-status').textContent = 'LISTENING…';
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR) return null;
+  const r=new SR();
+  r.continuous=false; r.interimResults=true; r.lang='en-US';
+  r.onstart=()=>{
+    isListening=true;
+    document.getElementById('voice-btn').className='voice-btn listening';
+    document.getElementById('voice-status').textContent='LISTENING… ('+voicePhase.toUpperCase()+')';
   };
-  r.onresult = (e) => {
-    let interim = '', final = '';
-    for(let i = e.resultIndex; i < e.results.length; i++) {
-      if(e.results[i].isFinal) final += e.results[i][0].transcript;
-      else interim += e.results[i][0].transcript;
+  r.onresult=(e)=>{
+    let interim='', final='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal) final+=e.results[i][0].transcript;
+      else interim+=e.results[i][0].transcript;
     }
-    document.getElementById('voice-transcript').textContent = final || interim;
-    if(final) { stopVoice(); submitGenreGuess(final.trim()); }
+    document.getElementById('voice-transcript').textContent=final||interim;
+    if(final){
+      stopVoice();
+      const val=final.trim();
+      if(voicePhase==='song'){
+        document.getElementById('genre-song-input').value=val;
+        // Auto-start listening for artist if artist field is empty
+        const artistVal=document.getElementById('genre-artist-input').value.trim();
+        if(!artistVal){
+          voicePhase='artist';
+          setTimeout(()=>{ if(!gRevealed) startListening(); }, 400);
+        }
+      } else {
+        document.getElementById('genre-artist-input').value=val;
+      }
+    }
   };
-  r.onerror = () => stopVoice();
-  r.onend = () => {
-    isListening = false;
-    document.getElementById('voice-btn').className = 'voice-btn';
-    document.getElementById('voice-status').textContent = 'TAP MIC TO GUESS';
+  r.onerror=()=>stopVoice();
+  r.onend=()=>{
+    isListening=false;
+    const vb=document.getElementById('voice-btn');
+    if(vb){ vb.className='voice-btn'; vb.textContent='🎤'; }
+    const vs=document.getElementById('voice-status');
+    if(vs) vs.textContent='TAP MIC TO FILL FIELDS';
   };
   return r;
 }
 
-function toggleVoice() {
-  if(gRevealed) return;
-  if(isListening) { stopVoice(); return; }
-  if(!recognition) recognition = initRecognition();
-  if(!recognition) {
-    document.getElementById('voice-status').textContent = 'MIC NOT SUPPORTED — TYPE BELOW';
+function startListening() {
+  if(!recognition) recognition=initRecognition();
+  if(!recognition){
+    document.getElementById('voice-status').textContent='MIC NOT SUPPORTED — TYPE BELOW';
     return;
   }
-  try { recognition.start(); } catch(e) {}
+  try { recognition.start(); } catch(e){}
+}
+
+function toggleVoice() {
+  if(gRevealed) return;
+  if(isListening){ stopVoice(); return; }
+  // Decide phase based on what's filled
+  const songFilled=document.getElementById('genre-song-input').value.trim().length>0;
+  voicePhase=songFilled?'artist':'song';
+  startListening();
 }
 
 function stopVoice() {
-  if(recognition && isListening) { try { recognition.stop(); } catch(e) {} }
-  isListening = false;
-  const vb = document.getElementById('voice-btn');
-  if(vb) { vb.className='voice-btn'; vb.textContent='🎤'; }
-  const vs = document.getElementById('voice-status');
-  if(vs) vs.textContent = 'TAP MIC TO GUESS';
+  if(recognition&&isListening){ try{ recognition.stop(); }catch(e){} }
+  isListening=false;
+  const vb=document.getElementById('voice-btn');
+  if(vb){ vb.className='voice-btn'; vb.textContent='🎤'; }
+  const vs=document.getElementById('voice-status');
+  if(vs) vs.textContent='TAP MIC TO FILL FIELDS';
 }
 
-// ── FINAL SCREEN ───────────────────────────────────────────────────────────
+// ── FINAL ──────────────────────────────────────────────────────────────────
 function showFinal(mode) {
   show('screen-final');
-  const results = mode==='artist' ? aResults : gResults;
-  const score   = mode==='artist' ? aScore   : gScore;
-  const total   = results.length;
-  document.getElementById('final-score-num').textContent = score;
-  document.getElementById('final-denom').textContent = 'OUT OF ' + total;
-  const pct = score/total;
-  document.getElementById('final-grade').textContent =
+  const isGenre=mode==='genre';
+  const results=isGenre?gResults:aResults;
+  const scoreVal=isGenre?gScore:aScore;
+  const maxPts=isGenre?gGameTracks.length*2:aGameTracks.length;
+  document.getElementById('final-score-num').textContent=scoreVal;
+  document.getElementById('final-denom').textContent='OUT OF '+maxPts;
+  const pct=scoreVal/maxPts;
+  document.getElementById('final-grade').textContent=
     pct===1  ?'🏆 PERFECT. YOU ARE THE FAN.':
     pct>=0.8 ?'🔥 HUGE FAN ENERGY':
     pct>=0.6 ?'😎 SOLID KNOWLEDGE':
     pct>=0.4 ?'🎧 CASUAL LISTENER':
     pct>=0.2 ?'🤔 JUST GETTING STARTED':
               '💀 DO YOU EVEN LISTEN?';
-  document.getElementById('results-list').innerHTML = results.map(r =>
-    '<div class="result-item">' +
-      '<div class="result-dot '+(r.correct?'c':'w')+'"></div>' +
-      '<div class="result-song">'+escHtml(r.track)+'</div>' +
-      (!r.correct&&r.guess?'<div class="result-guess">'+escHtml(r.guess)+'</div>':'') +
-    '</div>'
-  ).join('');
-  window._lastMode = mode;
-  document.getElementById('play-again-btn').textContent = mode==='artist' ? 'SAME ARTIST' : 'SAME GENRE';
+
+  if(isGenre){
+    document.getElementById('results-list').innerHTML=results.map(r=>
+      '<div class="result-item">' +
+        '<div class="result-dot '+(r.pts===2?'c':r.pts===1?'h':'w')+'"></div>' +
+        '<div class="result-song">'+escHtml(r.track)+'<br><span style="color:var(--muted);font-size:10px;">'+escHtml(r.artist)+'</span></div>' +
+        '<div class="result-pts">'+r.pts+'/2</div>' +
+      '</div>'
+    ).join('');
+  } else {
+    document.getElementById('results-list').innerHTML=results.map(r=>
+      '<div class="result-item">' +
+        '<div class="result-dot '+(r.correct?'c':'w')+'"></div>' +
+        '<div class="result-song">'+escHtml(r.track)+'</div>' +
+        (!r.correct&&r.guess?'<div class="result-pts" style="color:var(--muted);font-style:italic">'+escHtml(r.guess)+'</div>':'') +
+      '</div>'
+    ).join('');
+  }
+  window._lastMode=mode;
+  document.getElementById('play-again-btn').textContent=isGenre?'SAME GENRE':'SAME ARTIST';
 }
 
 function playAgain() {
-  const mode = window._lastMode;
-  if(mode==='artist') {
+  const mode=window._lastMode;
+  if(mode==='artist'){
     shuffle(aTrackPool); aGameTracks=aTrackPool.slice(0,10);
     aRound=0; aScore=0; aResults=[];
     buildArtistProgress(); show('screen-game-artist'); artistLoadRound();
   } else {
-    if(gLastMode) startGenreGame(gLastMode.index);
+    if(gLastIndex!==null) startGenreGame(gLastIndex);
   }
 }
 </script>
